@@ -1,0 +1,32 @@
+# Binaries
+backend-go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Output of go build / go run
+bin/
+build/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.iml
+
+# Go modules cache (if copied)
+go.sum.backup
+
+# Logs
+*.log
+
+# Coverage
+*.out
+coverage/
+
+# Swagger docs (gerados)
+docs/
