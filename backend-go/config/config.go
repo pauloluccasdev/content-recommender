@@ -26,9 +26,9 @@ func LoadConfig(path string) (Config, error) {
 	viper.AutomaticEnv()
 
 	viper.SetDefault("HTTP_PORT", 8080)
-	viper.SetDefault("DB_PORT", 5432)
+	viper.SetDefault("DB_PORT", 3306)
 	viper.SetDefault("DB_SSLMODE", "disable")
-	viper.SetDefault("DB_DRIVER", "postgres")
+	viper.SetDefault("DB_DRIVER", "mysql")
 	viper.SetDefault("TZ", "UTC")
 
 	var cfg Config
