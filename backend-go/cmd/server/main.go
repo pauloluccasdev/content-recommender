@@ -51,12 +51,17 @@ func main() {
 		log.Fatalf("erro ao semear dados: %v", err)
 	}
 
-	// Injeção de dependências
+	// Injeção de dependências - Users
 	userRepo := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepo)
 	userHandler := handler.NewUserHandler(userService)
 
-	router := routes.NewRouter(userHandler).SetupRoutes()
+	// Injeção de dependências - Contents
+	contentRepo := repository.NewContentRepository(db)
+	contentService := service.NewContentService(contentRepo)
+	contentHandler := handler.NewContentHandler(contentService)
+
+	router := routes.NewRouter(userHandler, contentHandler).SetupRoutes()
 
 	// Sobe o servidor em goroutine para permitir shutdown graceful
 	go func() {
