@@ -20,9 +20,15 @@ class SimpleRecommendationModel:
         self._initialize_model()
 
     def _initialize_model(self):
-        """Inicializa o modelo gerando o dataset"""
+        """Inicializa o modelo carregando o dataset (real ou simulado)"""
         self.interactions_df, self.contents_df = \
-            self.dataset_service.generate_simulated_dataset()
+            self.dataset_service.load_dataset()
+        self.interactions_matrix = self.dataset_service.get_interactions_matrix()
+    
+    def reload_model(self):
+        """Recarrega o modelo com dados atualizados (útil após novas interações)"""
+        self.interactions_df, self.contents_df = \
+            self.dataset_service.reload_dataset()
         self.interactions_matrix = self.dataset_service.get_interactions_matrix()
 
     def recommend_by_similarity(
