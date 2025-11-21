@@ -61,7 +61,21 @@ func main() {
 	contentService := service.NewContentService(contentRepo)
 	contentHandler := handler.NewContentHandler(contentService)
 
-	router := routes.NewRouter(userHandler, contentHandler).SetupRoutes()
+	// Injeção de dependências - Recommendations (criado antes para ser injetado em Interactions)
+	recommendationService := service.NewRecommendationService()
+	recommendationHandler := handler.NewRecommendationHandler(recommendationService)
+
+	// Injeção de dependências - Interactions
+	interactionRepo := repository.NewInteractionRepository(db)
+	interactionService := service.NewInteractionService(interactionRepo)
+	interactionHandler := handler.NewInteractionHandler(interactionService, recommendationService)
+
+	router := routes.NewRouter(
+		userHandler,
+		contentHandler,
+		interactionHandler,
+		recommendationHandler,
+	).SetupRoutes()
 
 	// Sobe o servidor em goroutine para permitir shutdown graceful
 	go func() {
